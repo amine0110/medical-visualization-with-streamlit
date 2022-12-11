@@ -48,7 +48,7 @@ with st.container():
     if input_path:
         if not state:
             if does_zip_have_nifti(input_path):
-                temp_data_directory = f'./data/{get_random_string(10)}/'
+                temp_data_directory = f'./data/{get_random_string(15)}/'
                 os.makedirs(temp_data_directory, exist_ok=True)
                 store_data(input_path, temp_data_directory)
                 data_has_changed = True
@@ -76,7 +76,7 @@ with st.container():
 
     # Documention: https://formsubmit.co/ 
     contact_form = """
-    <form action="https://formsubmit.co/mohammed@velmeni.com" method="POST">
+    <form action="https://formsubmit.co/mohammed@pycad.co" method="POST">
         <input type="hidden" name="_captcha" value="false">
         <input type="text" name="name" placeholder="Your name" required>
         <input type="email" name="email" placeholder="Your email" required>

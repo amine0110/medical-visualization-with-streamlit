@@ -5,9 +5,17 @@ from streamlit.server.server import Server
 import zipfile
 import os
 import shutil
+import random
+import string
+
+def get_random_string(length):
+    result_str = ''.join(random.choice(string.ascii_letters) for i in range(length))
+    return result_str
+
 
 MAX_SIZE = 300000000 # 300MB
-temp_data_directory = './data/'
+
+temp_data_directory = f'./data/{get_random_string(10)}/'
 temp_zip_folder = './temp/'
 temp_zip_file = temp_zip_folder + 'data.zip'
 
@@ -99,16 +107,16 @@ def is_zip_valid(path):
         check_zip.close()
     except:
         st.warning('Not a valid zip file.')
-        clear_data_storage(temp_zip_folder)
+        # clear_data_storage(temp_zip_folder)
         return False
     return True
 
-def does_zip_have_dcm(file):
+def does_zip_have_nifti(file):
 
     with zipfile.ZipFile(file) as zip_ref:
         name_list = zip_ref.namelist()
         for item in name_list:
-            if item[-4:] == '.dcm':
+            if item[-7:] == '.nii.gz':
                 return True
     st.warning('Zip folder does not have folders with DICOM files.')
     return False
@@ -130,12 +138,14 @@ def store_data(file, temporary_location=temp_zip_file):
     
     if is_zip_oversized(temporary_location):
         st.warning('Oversized zip file.')
-        clear_data_storage(temporary_location)
+        # clear_data_storage(temporary_location)
         return False
 
-    with zipfile.ZipFile(temporary_location) as zip_ref:            
+    with zipfile.ZipFile(temporary_location) as zip_ref:         
         zip_ref.extractall(temp_data_directory + '/')
+        st.success('The file is uploaded')
         
-    clear_data_storage(temp_zip_folder)
+    # clear_data_storage(temp_zip_folder)
 
     return True
+

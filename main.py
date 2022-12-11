@@ -5,8 +5,9 @@ import vtk
 from itkwidgets import view
 from streamlit_lottie import st_lottie
 import requests
-from utils import get_state, temp_data_directory, does_zip_have_nifti, store_data
+from utils import get_state, does_zip_have_nifti, store_data, get_random_string
 from glob import glob
+import os
 
 def load_lottieurl(url):
     r = requests.get(url)
@@ -19,13 +20,16 @@ def local_css(file_name):
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 
+global temp_data_directory
+temp_data_directory = ''
 
-path_to_file = glob(f'{temp_data_directory}/*.nii.gz')
-# path_to_file = 'samples/segmentation_liver.nii.gz'
+
+
 lottie_file = load_lottieurl('https://assets10.lottiefiles.com/private_files/lf30_4FGi6N.json')
 state = get_state()
 data_key = 'has_data'
 data_has_changed = False
+ 
 
 
 st.set_page_config(page_title='3D Visualization', page_icon=':pill:', layout='wide')
@@ -44,12 +48,14 @@ with st.container():
     if input_path:
         if not state:
             if does_zip_have_nifti(input_path):
-                store_data(input_path)
+                temp_data_directory = f'./data/{get_random_string(10)}/'
+                os.makedirs(temp_data_directory, exist_ok=True)
+                store_data(input_path, temp_data_directory)
                 data_has_changed = True
 
 st.write("---")
 if st.button('Show 3D'):
-    print(path_to_file)
+    path_to_file = glob(f'{temp_data_directory}/*.nii.gz')
     if path_to_file:
         with st.container():
             reader = vtk.vtkNIFTIImageReader()

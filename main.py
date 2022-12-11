@@ -5,6 +5,8 @@ import vtk
 from itkwidgets import view
 from streamlit_lottie import st_lottie
 import requests
+from utils import get_state, temp_data_directory, does_zip_have_nifti, store_data
+from glob import glob
 
 def load_lottieurl(url):
     r = requests.get(url)
@@ -16,8 +18,14 @@ def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-path_to_file = './samples/volume.nii.gz'
+
+
+path_to_file = glob(f'{temp_data_directory}/*.nii.gz')
+# path_to_file = 'samples/segmentation_liver.nii.gz'
 lottie_file = load_lottieurl('https://assets10.lottiefiles.com/private_files/lf30_4FGi6N.json')
+state = get_state()
+data_key = 'has_data'
+data_has_changed = False
 
 
 st.set_page_config(page_title='3D Visualization', page_icon=':pill:', layout='wide')
@@ -28,20 +36,32 @@ st.write("[Visit my Website](https://pycad.co/)")
 
 st_lottie(lottie_file, height=1000, key='coding')
 
+input_path = st.file_uploader('Upload files')
+
+# Upload section
+with st.container():
+    st.write('---')
+    if input_path:
+        if not state:
+            if does_zip_have_nifti(input_path):
+                store_data(input_path)
+                data_has_changed = True
 
 st.write("---")
 if st.button('Show 3D'):
-    with st.container():
-        reader = vtk.vtkNIFTIImageReader()
-        reader.SetFileName(path_to_file)
-        reader.Update()
+    print(path_to_file)
+    if path_to_file:
+        with st.container():
+            reader = vtk.vtkNIFTIImageReader()
+            reader.SetFileName(path_to_file[0])
+            reader.Update()
 
-        view_width = 1800
-        view_height = 1600
+            view_width = 1800
+            view_height = 1600
 
-        snippet = embed.embed_snippet(views=view(reader.GetOutput()))
-        html = embed.html_template.format(title="", snippet=snippet)
-        components.html(html, width=view_width, height=view_height)
+            snippet = embed.embed_snippet(views=view(reader.GetOutput()))
+            html = embed.html_template.format(title="", snippet=snippet)
+            components.html(html, width=view_width, height=view_height)
 
 with st.container():
     st.write("---")

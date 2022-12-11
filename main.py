@@ -22,9 +22,8 @@ lottie_file = load_lottieurl('https://assets10.lottiefiles.com/private_files/lf3
 
 st.set_page_config(page_title='3D Visualization', page_icon=':pill:', layout='wide')
 local_css("style/style.css")
-st.subheader('This is Amine :wave:')
-st.title("Data Scientist")
-st.write("I am a phd student")
+st.title("3D Medical Imaging Visualization")
+st.subheader("Upload & Visualize")
 st.write("[Visit my Website](https://pycad.co/)")
 
 st_lottie(lottie_file, height=1000, key='coding')

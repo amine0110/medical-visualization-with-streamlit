@@ -4,7 +4,7 @@ from ipywidgets import embed
 import vtk
 from itkwidgets import view
 
-path_to_file = './samples/segmentation_liver.nii.gz'
+path_to_file = './samples/volume.nii.gz'
 
 st.set_page_config(page_title='3D Visualization', page_icon=':pill:', layout='wide')
 
@@ -19,8 +19,8 @@ if st.button('Show 3D'):
         reader.SetFileName(path_to_file)
         reader.Update()
 
-        view_width = 800
-        view_height = 600
+        view_width = 1800
+        view_height = 1600
 
         snippet = embed.embed_snippet(views=view(reader.GetOutput()))
         html = embed.html_template.format(title="", snippet=snippet)

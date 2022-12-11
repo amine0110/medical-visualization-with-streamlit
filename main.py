@@ -12,11 +12,16 @@ def load_lottieurl(url):
         return None
     return r.json()
 
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
 path_to_file = './samples/volume.nii.gz'
 lottie_file = load_lottieurl('https://assets10.lottiefiles.com/private_files/lf30_4FGi6N.json')
 
-st.set_page_config(page_title='3D Visualization', page_icon=':pill:', layout='wide')
 
+st.set_page_config(page_title='3D Visualization', page_icon=':pill:', layout='wide')
+local_css("style/style.css")
 st.subheader('This is Amine :wave:')
 st.title("Data Scientist")
 st.write("I am a phd student")
@@ -24,6 +29,8 @@ st.write("[Visit my Website](https://pycad.co/)")
 
 st_lottie(lottie_file, height=1000, key='coding')
 
+
+st.write("---")
 if st.button('Show 3D'):
     with st.container():
         reader = vtk.vtkNIFTIImageReader()
@@ -38,22 +45,22 @@ if st.button('Show 3D'):
         components.html(html, width=view_width, height=view_height)
 
 with st.container():
-        st.write("---")
-        st.header("Get In Touch With Us!")
-        st.write("##")
+    st.write("---")
+    st.header("Get In Touch With Us!")
+    st.write("##")
 
-        # Documention: https://formsubmit.co/ 
-        contact_form = """
-        <form action="https://formsubmit.co/mohammed@velmeni.com" method="POST">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="text" name="name" placeholder="Your name" required>
-            <input type="email" name="email" placeholder="Your email" required>
-            <textarea name="message" placeholder="Your message here" required></textarea>
-            <button type="submit">Send</button>
-        </form>
-        """
-        left_column, right_column = st.columns(2)
-        with left_column:
-            st.markdown(contact_form, unsafe_allow_html=True)
-        with right_column:
-            st.empty()
+    # Documention: https://formsubmit.co/ 
+    contact_form = """
+    <form action="https://formsubmit.co/mohammed@velmeni.com" method="POST">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="email" name="email" placeholder="Your email" required>
+        <textarea name="message" placeholder="Your message here" required></textarea>
+        <button type="submit">Send</button>
+    </form>
+    """
+    left_column, right_column = st.columns(2)
+    with left_column:
+        st.markdown(contact_form, unsafe_allow_html=True)
+    with right_column:
+        st.empty()

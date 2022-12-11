@@ -1,7 +1,10 @@
 # Medical Images Visualization With Streamlit
 In this small project, I will show you how you can use Streamlit and VTK to create a simple 3D visualizer that allows you to upload and visualize `NIFTI` files.
 
-![image](https://user-images.githubusercontent.com/37108394/206930410-4cf11236-9a59-4310-b809-3dccc8fd1f8f.png) 
+
+<p align="center">
+  <img width="660" height="200" src="https://user-images.githubusercontent.com/37108394/206930410-4cf11236-9a59-4310-b809-3dccc8fd1f8f.png">
+</p>
 
 ------------------------------------------------------------------------------
 
@@ -25,6 +28,11 @@ If you don't know how to host the application online, then you can host it and r
 - Clone the repository: 
 ```
 git clone https://github.com/amine0110/medical-visualization-with-streamlit
+```
+- Install the [Packages](https://github.com/amine0110/medical-visualization-with-streamlit/blob/main/README.md#packages) discussed above.
+- Run the command:
+```
+streamlit run .\main.py
 ```
 
 ## Visualization only

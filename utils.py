@@ -15,12 +15,9 @@ def get_random_string(length):
 
 MAX_SIZE = 300000000 # 300MB
 
-temp_data_directory = f'./data/{get_random_string(10)}/'
+
 temp_zip_folder = './temp/'
 temp_zip_file = temp_zip_folder + 'data.zip'
-
-if not os.path.isdir('./data/'):
-    os.makedirs('./data/')
 
 if not os.path.isdir('./temp'):
     os.makedirs('./temp/')
@@ -129,7 +126,7 @@ def clear_data_storage(path):
     if os.path.isdir(path):
         shutil.rmtree(path)
 
-def store_data(file, temporary_location=temp_zip_file):
+def store_data(file, temp_data_directory, temporary_location=temp_zip_file):
     
     st.warning('Loading data from zip.')
 
@@ -141,7 +138,7 @@ def store_data(file, temporary_location=temp_zip_file):
         # clear_data_storage(temporary_location)
         return False
 
-    with zipfile.ZipFile(temporary_location) as zip_ref:         
+    with zipfile.ZipFile(temporary_location) as zip_ref:        
         zip_ref.extractall(temp_data_directory + '/')
         st.success('The file is uploaded')
         

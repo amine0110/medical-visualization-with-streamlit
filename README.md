@@ -53,3 +53,8 @@ if path_to_file:
           html = embed.html_template.format(title="", snippet=snippet)
           components.html(html, width=view_width, height=view_height)
 ```
+
+## 🆕 New
+Learn how to effectively manage and process DICOM files in Python with our comprehensive course, designed to equip you with the skills and knowledge you need to succeed.
+
+https://www.learn.pycad.co/course/dicom-simplified
